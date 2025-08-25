@@ -1,8 +1,8 @@
 ## Cross-Chain Name Service Design Pattern
 
-## What is EggNS?
+## 1. What is EggNS?
 
-EggNS is an **educational cross-chain name service** that demonstrates how to register names on one blockchain and seamlessly bridge them to another using **Agglayer's Unified Bridge**.
+EggNS is an **educational cross-chain name service** that demonstrates how to register names on one blockchain and seamlessly bridge them to another using Agglayer's Unified Bridge.
 
 ### Core Capabilities
 
@@ -12,43 +12,45 @@ EggNS is an **educational cross-chain name service** that demonstrates how to re
 | **Unified View** | Single interface across multiple blockchains | View all your names from one dashboard |
 | **Bridge Integration** | Agglayer LxLy implementation | Automatic message encoding & execution |
 
-***
+---
 
-## 📋 Table of Contents
+## 2. Table of Contents
 
-1. [Application Architecture](#-application-architecture)
-2. [Project Structure](#-project-structure)
-3. [Service Layer Components](#-service-layer-components)
-4. [Smart Contract Integration](#-smart-contract-integration)
-5. [Bridge Implementation](#-bridge-implementation)
-6. [Component Architecture](#-component-architecture)
-7. [Hooks & State Management](#-hooks--state-management)
-8. [Testing Strategy](#-testing-strategy)
-9. [Configuration & Security](#-configuration--security)
-10. [Implementation Guide](#-implementation-guide)
+1. [Application Architecture](#3-application-architecture)
+2. [Project Structure](#4-project-structure)
+3. [Service Layer Components](#5-service-layer-components)
+4. [Smart Contract Integration](#6-smart-contract-integration)
+5. [Bridge Implementation](#7-bridge-implementation)
+6. [Component Architecture](#8-component-architecture)
+7. [Hooks & State Management](#9-hooks--state-management)
+8. [Testing Strategy](#10-testing-strategy)
+9. [Configuration & Security](#11-configuration--security)
+10. [Implementation Guide](#12-implementation-guide)
 
-***
+---
 
-## Application Architecture
+## 3. Application Architecture
 
 ### Flow Process
 
-> **User Journey**: Register → Bridge → Verify
-> 
-> 1. **Check Availability** - Ensure name is available
-> 2. **Register on Source** - Submit transaction to Sepolia
-> 3. **Bridge Message** - Send via Agglayer LxLy to Cardona
-> 4. **Verify Destination** - Confirm name exists on target chain
+> User Journey: Register → Bridge → Verify
+>
+> 1. Check Availability - Ensure name is available
+> 2. Register on Source - Submit transaction to Sepolia
+> 3. Bridge Message - Send via Agglayer LxLy to Cardona
+> 4. Verify Destination - Confirm name exists on target chain
 
-***
+---
 
-## Project Structure
+## 4. Project Structure
 
+(See the repository tree for full file layout.)
 
-## ⚙️ Service Layer Components
+---
 
+## 5. Service Layer Components
 
-### 📝 Registration Service  
+### 5.1 Registration Service
 **File**: `services/name-registration-service.ts`
 
 **Purpose**: Complete registration workflow orchestration
@@ -62,9 +64,9 @@ EggNS is an **educational cross-chain name service** that demonstrates how to re
 5. ✔️ Verify Success
 ```
 
-***
+---
 
-### Bridge Service
+### 5.2 Bridge Service
 **File**: `services/bridge-service.ts`
 
 **Purpose**: Agglayer LxLy integration
@@ -79,11 +81,11 @@ Name + Owner → ABI Encode → Agglayer LxLy → Destination Execution
 - `submitBridgeMessage()` - Send via Agglayer LxLy
 - `trackBridgeStatus()` - Monitor execution
 
-> **🔧 Technical Detail**: Uses `receiveBridgedName(name, owner)` as the destination function
+Technical Detail: Uses `receiveBridgedName(name, owner)` as the destination function
 
-***
+---
 
-### Multi-Chain Service
+### 5.3 Multi-Chain Service
 **File**: `services/multi-chain-name-service.ts`
 
 **Purpose**: Unified cross-chain data view
@@ -91,24 +93,24 @@ Name + Owner → ABI Encode → Agglayer LxLy → Destination Execution
 #### Parallel Query Strategy
 ```
 Sepolia Query ──┐
-                ├─→ Merge & Deduplicate → Unified Results
+               ├─→ Merge & Deduplicate → Unified Results
 Cardona Query ──┘
 ```
 
-***
+---
 
-### Browser Registration Service
+### 5.4 Browser Registration Service
 **File**: `services/browser-registration-service.ts`
 
 **Purpose**: Client-side integration wrapper
 
-Provides clean interface between frontend components and backend services for seamless user experience.
+Provides a clean interface between frontend components and backend services for a seamless user experience.
 
-***
+---
 
-## Smart Contract Integration
+## 6. Smart Contract Integration
 
-### EggRegistry Contract Design
+### 6.1 EggRegistry Contract Design
 **Files**: `contracts/EggRegistry.sol`, `contracts/EggNSRegistryMinimal.sol`
 
 #### Core Functions
@@ -124,28 +126,28 @@ mapping(string => address) nameToOwner;    // name → owner
 mapping(address => string[]) ownerToNames; // owner → names[]
 ```
 
-### ABI Integration Pattern
+### 6.2 ABI Integration Pattern
 **Files**: `abis/EggRegistry.json`, `abis/EggNSRegistry.json`
 
+Minimal ABI example:
 ```json
-// Minimal ABI example
 {
   "name": "registerName",
   "inputs": [{"name": "name", "type": "string"}]
 }
 ```
 
-***
+---
 
-## Bridge Implementation
+## 7. Bridge Implementation
 
-### Agglayer LxLy Integration Strategy
+### 7.1 Agglayer LxLy Integration Strategy
 **File**: `services/utils/lxly-utils.ts`
 
 #### Message Encoding Process
 ```
 1. Function Name: "receiveBridgedName"
-2. Parameters: [name: string, owner: address]  
+2. Parameters: [name: string, owner: address]
 3. ABI Encoding: Convert to bytecode
 4. Bridge Payload: Ready for cross-chain transport
 ```
@@ -153,36 +155,34 @@ mapping(address => string[]) ownerToNames; // owner → names[]
 #### Execution Flow
 | Phase | Location | Action |
 |-------|----------|--------|
-| **Encode** | Source Chain | Create function call bytecode |
-| **Submit** | Bridge Layer | Send via Agglayer LxLy |
-| **Execute** | Destination | Automatic function execution |
+| Encode | Source Chain | Create function call bytecode |
+| Submit | Bridge Layer | Send via Agglayer LxLy |
+| Execute | Destination | Automatic function execution |
 
-### Bridge Service Architecture
-
+### 7.2 Bridge Service Architecture
 ```typescript
 // Clean interface
 bridgeNameToDestination(name, owner) → { transactionHash }
 ```
 
-**Key Responsibilities**:
-- 🔧 ABI encoding for destination calls
-- 📡 Agglayer LxLy client interaction
-- ⛽ Gas management for bridge operations
-- 📊 Transaction tracking & monitoring
+Key Responsibilities:
+- ABI encoding for destination calls
+- Agglayer LxLy client interaction
+- Gas management for bridge operations
+- Transaction tracking & monitoring
 
-***
+---
 
-## 🎨 Component Architecture
+## 8. Component Architecture
 
-### Core UI Components
-
+### 8.1 Core UI Components
 | Component | File | Purpose |
 |-----------|------|---------|
-| **EggNSHeader** | `components/EggNSHeader.tsx` | Navigation & branding |
-| **EggNSHomepage** | `components/EggNSHomepage.tsx` | Landing page |
-| **EggNSDashboard** | `components/EggNSDashborad.tsx` | Main dashboard |
+| EggNSHeader | `components/EggNSHeader.tsx` | Navigation & branding |
+| EggNSHomepage | `components/EggNSHomepage.tsx` | Landing page |
+| EggNSDashboard | `components/EggNSDashborad.tsx` | Main dashboard |
 
-### Name Registry Components
+### 8.2 Name Registry Components
 **Directory**: `components/NameRegistry/`
 
 | Component | Purpose |
@@ -193,7 +193,7 @@ bridgeNameToDestination(name, owner) → { transactionHash }
 | `CrossChainNameVerifier.tsx` | Verify cross-chain names |
 | `BridgeNameToChain.tsx` | Bridge interface |
 
-### Bridge Monitoring Components
+### 8.3 Bridge Monitoring Components
 **Directory**: `components/Bridge/`
 
 | Component | Purpose |
@@ -201,38 +201,53 @@ bridgeNameToDestination(name, owner) → { transactionHash }
 | `BridgeStatus.tsx` | Track bridge operations |
 | `TransactionMonitor.tsx` | Monitor transaction status |
 
-### UI Utilities
+### 8.4 UI Utilities
 **Directory**: `components/ui/`
 
 Common UI components like `NameCard.tsx`, `ChainBadge.tsx`, `LoadingSkeleton.tsx` for consistent user experience.
 
-***
+---
 
-## 🎣 Hooks & State Management
+## 9. Hooks & State Management
 
-### Custom Hooks Overview
+### 9.1 Custom Hooks Overview
 **Directory**: `hooks/`
 
 | Hook | File | Purpose |
 |------|------|---------|
-| **useEggNS** | `useEggNS.ts` | Main EggNS functionality |
-| **useNameRegistration** | `useNameRegistration.ts` | Registration flow |
-| **useMultiChainNames** | `useMultiChainNames.ts` | Cross-chain data |
-| **useCredentials** | `useCredentials.ts` | User credentials |
-| **useReducedMotion** | `useReducedMotion.ts` | Accessibility |
+| useEggNS | `useEggNS.ts` | Main EggNS functionality |
+| useNameRegistration | `useNameRegistration.ts` | Registration flow |
+| useMultiChainNames | `useMultiChainNames.ts` | Cross-chain data |
+| useCredentials | `useCredentials.ts` | User credentials |
+| useReducedMotion | `useReducedMotion.ts` | Accessibility |
 
-### Hook Architecture Pattern
-
+#### Hook Architecture Pattern
 ```typescript
 // Clean hook interface
 const { register, bridge, verify } = useEggNS();
 ```
 
-**Benefits**:
-- 🎯 Encapsulate complex logic
-- 🔄 Reusable across components
-- 📊 Centralized state management
-- ⚡ Optimized re-renders
+Benefits:
+- Encapsulate complex logic
+- Reusable across components
+- Centralized state management
+- Optimized re-renders
 
-***
+---
+
+## 10. Testing Strategy
+
+(Testing strategy and approach can be added here.)
+
+---
+
+## 11. Configuration & Security
+
+(Notes on configuration, environment files, and security considerations.)
+
+---
+
+## 12. Implementation Guide
+
+(Implementation steps, deployment notes, and run instructions can go here.)
 
