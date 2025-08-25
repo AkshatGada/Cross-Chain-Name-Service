@@ -42,12 +42,6 @@ EggNS is an **educational cross-chain name service** that demonstrates how to re
 
 ---
 
-## 4. Project Structure
-
-(See the repository tree for full file layout.)
-
----
-
 ## 5. Service Layer Components
 
 ### 5.1 Registration Service
@@ -234,20 +228,4 @@ Benefits:
 - Optimized re-renders
 
 ---
-
-## 10. Testing Strategy
-
-(Testing strategy and approach can be added here.)
-
----
-
-## 11. Configuration & Security
-
-(Notes on configuration, environment files, and security considerations.)
-
----
-
-## 12. Implementation Guide
-
-(Implementation steps, deployment notes, and run instructions can go here.)
 
