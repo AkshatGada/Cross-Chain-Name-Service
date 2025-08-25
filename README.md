@@ -17,15 +17,14 @@ EggNS is an **educational cross-chain name service** that demonstrates how to re
 ## 2. Table of Contents
 
 1. [Application Architecture](#3-application-architecture)
-2. [Project Structure](#4-project-structure)
-3. [Service Layer Components](#5-service-layer-components)
-4. [Smart Contract Integration](#6-smart-contract-integration)
-5. [Bridge Implementation](#7-bridge-implementation)
-6. [Component Architecture](#8-component-architecture)
-7. [Hooks & State Management](#9-hooks--state-management)
-8. [Testing Strategy](#10-testing-strategy)
-9. [Configuration & Security](#11-configuration--security)
-10. [Implementation Guide](#12-implementation-guide)
+2. [Service Layer Components](#4-service-layer-components)
+3. [Smart Contract Integration](#5-smart-contract-integration)
+4. [Bridge Implementation](#6-bridge-implementation)
+5. [Component Architecture](#7-component-architecture)
+6. [Hooks & State Management](#8-hooks--state-management)
+7. [Testing Strategy](#9-testing-strategy)
+8. [Configuration & Security](#10-configuration--security)
+9. [Implementation Guide](#11-implementation-guide)
 
 ---
 
@@ -42,25 +41,25 @@ EggNS is an **educational cross-chain name service** that demonstrates how to re
 
 ---
 
-## 5. Service Layer Components
+## 4. Service Layer Components
 
-### 5.1 Registration Service
+### 4.1 Registration Service
 **File**: `services/name-registration-service.ts`
 
 **Purpose**: Complete registration workflow orchestration
 
 #### Process Flow
 ```
-1. ✅ Check Availability
-2. 🔐 Create Signer  
-3. 📤 Submit Transaction
-4. ⏳ Wait for Confirmation
-5. ✔️ Verify Success
+1. Check Availability
+2. Create Signer
+3. Submit Transaction
+4. Wait for Confirmation
+5. Verify Success
 ```
 
 ---
 
-### 5.2 Bridge Service
+### 4.2 Bridge Service
 **File**: `services/bridge-service.ts`
 
 **Purpose**: Agglayer LxLy integration
@@ -79,7 +78,7 @@ Technical Detail: Uses `receiveBridgedName(name, owner)` as the destination func
 
 ---
 
-### 5.3 Multi-Chain Service
+### 4.3 Multi-Chain Service
 **File**: `services/multi-chain-name-service.ts`
 
 **Purpose**: Unified cross-chain data view
@@ -93,7 +92,7 @@ Cardona Query ──┘
 
 ---
 
-### 5.4 Browser Registration Service
+### 4.4 Browser Registration Service
 **File**: `services/browser-registration-service.ts`
 
 **Purpose**: Client-side integration wrapper
@@ -102,9 +101,9 @@ Provides a clean interface between frontend components and backend services for 
 
 ---
 
-## 6. Smart Contract Integration
+## 5. Smart Contract Integration
 
-### 6.1 EggRegistry Contract Design
+### 5.1 EggRegistry Contract Design
 **Files**: `contracts/EggRegistry.sol`, `contracts/EggNSRegistryMinimal.sol`
 
 #### Core Functions
@@ -120,7 +119,7 @@ mapping(string => address) nameToOwner;    // name → owner
 mapping(address => string[]) ownerToNames; // owner → names[]
 ```
 
-### 6.2 ABI Integration Pattern
+### 5.2 ABI Integration Pattern
 **Files**: `abis/EggRegistry.json`, `abis/EggNSRegistry.json`
 
 Minimal ABI example:
@@ -133,9 +132,9 @@ Minimal ABI example:
 
 ---
 
-## 7. Bridge Implementation
+## 6. Bridge Implementation
 
-### 7.1 Agglayer LxLy Integration Strategy
+### 6.1 Agglayer LxLy Integration Strategy
 **File**: `services/utils/lxly-utils.ts`
 
 #### Message Encoding Process
@@ -153,7 +152,7 @@ Minimal ABI example:
 | Submit | Bridge Layer | Send via Agglayer LxLy |
 | Execute | Destination | Automatic function execution |
 
-### 7.2 Bridge Service Architecture
+### 6.2 Bridge Service Architecture
 ```typescript
 // Clean interface
 bridgeNameToDestination(name, owner) → { transactionHash }
@@ -167,16 +166,16 @@ Key Responsibilities:
 
 ---
 
-## 8. Component Architecture
+## 7. Component Architecture
 
-### 8.1 Core UI Components
+### 7.1 Core UI Components
 | Component | File | Purpose |
 |-----------|------|---------|
 | EggNSHeader | `components/EggNSHeader.tsx` | Navigation & branding |
 | EggNSHomepage | `components/EggNSHomepage.tsx` | Landing page |
 | EggNSDashboard | `components/EggNSDashborad.tsx` | Main dashboard |
 
-### 8.2 Name Registry Components
+### 7.2 Name Registry Components
 **Directory**: `components/NameRegistry/`
 
 | Component | Purpose |
@@ -187,7 +186,7 @@ Key Responsibilities:
 | `CrossChainNameVerifier.tsx` | Verify cross-chain names |
 | `BridgeNameToChain.tsx` | Bridge interface |
 
-### 8.3 Bridge Monitoring Components
+### 7.3 Bridge Monitoring Components
 **Directory**: `components/Bridge/`
 
 | Component | Purpose |
@@ -195,16 +194,16 @@ Key Responsibilities:
 | `BridgeStatus.tsx` | Track bridge operations |
 | `TransactionMonitor.tsx` | Monitor transaction status |
 
-### 8.4 UI Utilities
+### 7.4 UI Utilities
 **Directory**: `components/ui/`
 
 Common UI components like `NameCard.tsx`, `ChainBadge.tsx`, `LoadingSkeleton.tsx` for consistent user experience.
 
 ---
 
-## 9. Hooks & State Management
+## 8. Hooks & State Management
 
-### 9.1 Custom Hooks Overview
+### 8.1 Custom Hooks Overview
 **Directory**: `hooks/`
 
 | Hook | File | Purpose |
@@ -226,6 +225,24 @@ Benefits:
 - Reusable across components
 - Centralized state management
 - Optimized re-renders
+
+---
+
+## 9. Testing Strategy
+
+(Testing strategy and approach can be added here.)
+
+---
+
+## 10. Configuration & Security
+
+(Notes on configuration, environment files, and security considerations.)
+
+---
+
+## 11. Implementation Guide
+
+(Implementation steps, deployment notes, and run instructions can go here.)
 
 ---
 
