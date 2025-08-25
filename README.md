@@ -1,4 +1,6 @@
-## Cross-Chain Name Service Design Pattern
+## Cross-Chain Name Service Design Pattern ( WIP )
+
+Note: This project is a work in progress. Several features, integrations, and deployment instructions are still being finalized; full code and usage instructions will be provided soon.
 
 ## 1. What is EggNS?
 
