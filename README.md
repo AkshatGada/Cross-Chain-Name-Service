@@ -1,4 +1,4 @@
-# Cross-Chain Name Service Design Pattern ( WIP )
+# Cross-Chain Name Service Design Pattern 
 
 > **Note — Work in progress:** The repository already includes main UI components, services, and smart contract sources. We're actively finishing the final end-to-end integration and the local AggSandbox setup to enable easy local testing and full deployment.
 >
