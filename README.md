@@ -1,6 +1,6 @@
 ## Cross-Chain Name Service Design Pattern ( WIP )
 
-> **Note:** This repository is a work-in-progress (WIP). Core implementation and documentation are being finalized and the repository will be ready for full use soon.
+> **Note — WIP:** The repository includes all main component files and core modules; however, full end-to-end integration and the local AggSandbox integration are still pending and will be completed soon.
 
 ## 1. What is EggNS?
 
