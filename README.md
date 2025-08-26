@@ -1,6 +1,9 @@
 # Cross-Chain Name Service Design Pattern ( WIP )
 
-> **Note — Work in progress:** The repository already includes all the main components, services, UI and smart contracts . We're actively finishing the final end-to-end integration and the local AggSandbox setup to enable easy local testing and full deployment.
+> **Note — Work in progress:** The repository already includes main UI components, services, and smart contract sources. We're actively finishing the final end-to-end integration and the local AggSandbox setup to enable easy local testing and full deployment.
+>
+> **Demo / Announcement:** See the demo announcement for a short showcase: [POC Demo on X](https://x.com/Agglayer/status/1938617313613242374).
+
 
 ## 1. What is EggNS?
 
